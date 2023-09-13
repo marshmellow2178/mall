@@ -1,0 +1,239 @@
+/*전체*/
+@charset "utf-8";
+*{
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+    font-size: 16px;
+}
+html,body{ 
+    font-size: 16px;
+    min-width: 1200px;
+}
+ul, ol{
+	padding: 30px 0;
+}
+ul,li{
+    list-style-type: none;
+}
+img{width: 100%;}
+a{/*링크*/
+	text-decoration: none;
+	color: black;
+	text-align: center;
+	vertical-align: middle;
+	display: inline-block;
+}
+p{
+	vertical-align: middle;
+}
+.icon{
+	width: 50px;
+}
+/*==================================
+======================================
+=========================================
+*/
+header{
+    width: 100%;
+    min-width: 1200px;
+    padding: 10px 10%;
+    display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	padding-top: 10px;
+}
+header .logo{
+	width: 100px;
+	margin: 0 30px;
+}
+header nav{
+	font-size: 20px;
+	width: 80%;
+	margin: 20px auto;
+	display: flex;
+	justify-content: space-between;
+}
+header nav h3{
+	width: 100%;
+	font-size: 20px;
+	text-align: center;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid gray;
+}
+header nav div{
+	width: 20%;
+	padding: 10px;
+}
+header nav div a, header nav div p{
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+}
+.active{
+	border: 1px solid navy;
+}
+footer{
+	width: 100%;
+	padding: 50px;
+	font-size: 15px;
+	text-align: center;
+	background-color: #ebebeb;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+}
+footer figure{
+	width: 50px;
+	margin: 10px;
+}
+/*==================================
+======================================
+=========================================
+*/
+main { 
+	width: 80%;
+	min-height: calc(100vh - 120px);
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+form{
+	padding: 10px;
+	vertical-align: middle;
+}
+input, select{/*입력 컨트롤*/
+	height: 40px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 10px 0;
+}
+input[type=text], input[type=password]{
+	text-align: left;
+	border: 1px solid lightgray;
+}
+input[type=search]{
+	text-align: left;
+}
+input[type=button], input[type=submit], input[type=reset]{
+    color: white;
+    border: none;
+	padding: 0 20px;
+	font-weight: bold;
+	background-color: navy;
+}
+input[type=number]{
+	text-align: right;
+	width: 80px;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=checkbox]{
+	margin: 5px;
+}
+.paging{ /*페이징 영역*/
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+}
+.paging a, .paging p{
+	display: inline-block;
+	width: 50px;
+	padding: 0;
+}
+.ctgr{/*버튼*/
+	color: navy;
+	font-weight: bold;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px 20px;
+	border: 3px solid navy;
+}
+.ctgr.active, .ctgr:hover{
+	background-color: navy;
+	color: white;
+	font-weight: bold;
+}
+table{/*표*/
+	border-collapse: collapse;
+	width: 100%;
+	border-top: 3px solid navy;
+	border-bottom: 3px solid navy;
+	margin-bottom: 10px;
+}
+table tr{
+	border-bottom: 1px solid navy;
+}
+table th, table td{
+	padding: 10px 20px;
+}
+table figure, form figure{
+	width: 100px;
+	margin: 10px;
+	padding: 10px;
+	border: 1px solid gray;
+}
+table caption{
+	font-size: 20px;
+	font-weight: bold;
+	padding: 10px 0;
+	text-align: left;
+}
+.dc{
+	padding: 0 10px;
+	font-size: 14px;
+	color: red;
+}
+article{
+	padding: 20px;
+	border-top: 3px solid navy;
+	border-bottom: 3px solid navy;
+	margin: 30px 0;
+}
+article h2{ /*제목*/
+	padding: 30px 0;
+	border-bottom: 1px solid navy;
+}
+article figure{ /*사진*/
+	margin: 30px 0;
+}
+article textarea{ /*내용*/
+	width: 80%;
+	height: 50vh;
+	padding: 20px;
+}
+.schtype{/*검색폼*/
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.schtype p{
+	font-weight: bold;
+}
+#ctgrsch{
+	width: 80%;
+	text-align: right;
+}
+ul{
+	border-top: 3px solid navy;
+	width:100%;
+   	display: flex;
+   	flex-wrap: wrap;
+}
+ul li{
+	width: 25%;
+	padding: 20px;
+	position: relative;
+	min-width: 250px;
+}
+ul h3{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
