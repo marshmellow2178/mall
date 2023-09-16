@@ -1,25 +1,51 @@
 # 팀 프로젝트 
 
 ## 개요
-> 아이돌 관련상품을 판매하는 쇼핑몰
+> 아이돌 관련상품을 판매하는 모의 쇼핑몰로, 여러 굿즈 판매사이트를 참고하여 작성
 
-### 개발 환경
+## 개발 환경
 - jsp, java 1.8, MySQL
 - 개발 기간: 1개월
-- 개발 인원: 5명(각자 회원/상품(본인)/주문/이벤트/메인페이지+판매자로 역할 분배)
+- 개발 인원: 5명
+- 담당: 상품/상품 등록
 
-### 요약
-- 팀원들의 취업, 이사 등 조기수료로 이후 개인 프로젝트를 진행
-- src_JSP는 JSP만을 사용했던 시점의 java 클래스 파일
-- src_springMVC는 스프링을 적용한 클래스 파일
-- view는 jsp/css파일
-- 쿼리 문장 생성, 사용자 입력 처리 등을 모두 직접 작성
-- 서비스 레이어 작업 없음
-- 데이터베이스와의 연결을 처리하는 클래스가 존재
+## 소개
 
-### 평가
-> 복합적
-- 개인적으로 어드민 페이지에 너무 많은 시간을 소비하여, 데이터 삽입 등에 소홀해짐
-- 쿼리문을 수동으로 생성하는 방식으로 많은 실수와 괴로움을 유발
-- 쿼리문의 생성이 controller 와 dao 모두에서 일어나 역할 분리가 되지 않고 수정이 매우 어려워짐
-- 점점 수정사항을 반영하기 어려워지고 사소한 실수가 누적되면서 심각한 피로감을 느낌
+### 데이터베이스 
+
+![팀ERD](https://github.com/marshmellow2178/mall/assets/115971843/5b4d50f4-c6e1-49bd-a444-0ef7596f0bfb)
+
+### 메인 페이지
+
+![team_main](https://github.com/marshmellow2178/mall/assets/115971843/46807425-50da-42b7-93ea-e558e83df656)
+아티스트 관련 이벤트 소개
+
+![team_main3](https://github.com/marshmellow2178/mall/assets/115971843/d88eda62-2d01-4604-8d4e-804bbbdc90e1)
+추천상품 목록
+
+![team_main2](https://github.com/marshmellow2178/mall/assets/115971843/05e7e832-64c6-46bb-ad34-b1788d12f0b8)
+아티스트별 판매량 순위
+
+### 상품
+
+![team_pdt](https://github.com/marshmellow2178/mall/assets/115971843/24baba45-649d-4a83-8ff8-2b97014fc774)
+상품목록
+
+![team_pdt_detail](https://github.com/marshmellow2178/mall/assets/115971843/a206d932-a541-4d5f-98d2-592f7fb1f152)
+상품상세
+
+![team_artist](https://github.com/marshmellow2178/mall/assets/115971843/d8fe0dae-12ea-4fba-8f23-40faefe6aa55)
+아티스트 목록: 클릭 시 아티스트별 상품 목록으로 이동
+
+### 이벤트
+
+![team_event](https://github.com/marshmellow2178/mall/assets/115971843/a339153e-973c-4b96-9afb-7b6e2050949c)
+이벤트 목록
+
+![team_event_detail](https://github.com/marshmellow2178/mall/assets/115971843/6f5b36e6-7976-4193-aeb5-88e7e182798d)
+이벤트 상세내용
+
+### 공지사항
+
+![team_notice](https://github.com/marshmellow2178/mall/assets/115971843/3af8f91a-49a4-47aa-a4f6-51de77fa19a2)
+공지사항 목록
