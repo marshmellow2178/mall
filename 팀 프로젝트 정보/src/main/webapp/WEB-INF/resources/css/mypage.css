@@ -1,0 +1,39 @@
+
+
+/*메뉴, 컨텐츠구역, 페이지 제목, 버튼 디자인*/
+
+
+.menu{ /* 마이페이지 메뉴*/
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 15%;
+    height: fit-content;
+}
+.menu p{
+    width: 100%;
+    padding: 10px 0;
+    font-size: 18px;
+    background-color: #6255f6;
+    color: white;
+    font-weight: bold;
+}
+.menu a{
+    font-size: 14px;
+    width: 100%;
+    padding: 10px 0;
+    border: 1px solid #6255f6;
+}
+.menu a:hover{
+    background-color: #6255f6;
+    color: white;
+}
+
+.content{ /*내용*/
+    margin: 0 30px;
+    padding: 15px;
+    width: 75%;
+    border: 1px solid #6255f6;
+    height: fit-content;
+}
+

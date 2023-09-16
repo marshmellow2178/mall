@@ -1,0 +1,7 @@
+@import url('./common.css');
+
+body{font-family: "Noto Sans KR", Sans-Serif;}
+
+.main{max-width: 100%;}
+.main > div{width:1200px;  margin: 0 auto;}
+.main table {width: 1200px;}
