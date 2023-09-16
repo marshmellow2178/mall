@@ -48,14 +48,7 @@ http://init2178.cafe24.com/demo/super
 ![main2](https://github.com/marshmellow2178/mall/assets/115971843/9d5ddca1-baa6-40b7-808c-253184fe0356)
 
 ### 상품
-- 목록
-![pdt_list](https://github.com/marshmellow2178/mall/assets/115971843/6b4c2b59-23e0-49e1-8a4b-35a2cda165b0)
-
-- 상세
-![상품상세](https://github.com/marshmellow2178/mall/assets/115971843/d5e87ee1-20fd-408a-9a90-d63e5be8291b)
-
-- 구매
-![구매](https://github.com/marshmellow2178/mall/assets/115971843/caa7f66f-ce5c-4d49-bdee-0f7231cd9c60)
+![상품](https://github.com/marshmellow2178/mall/assets/115971843/d9772e10-27d1-4766-b118-d0ced220fe75)
 
 ### 마이페이지
 - 공통메뉴
@@ -63,12 +56,6 @@ http://init2178.cafe24.com/demo/super
 
 - 회원
 ![회원](https://github.com/marshmellow2178/mall/assets/115971843/9ccd340f-3fc9-4f69-8488-cb7de50a2d0e)
-
-- 장바구니
-![cart](https://github.com/marshmellow2178/mall/assets/115971843/63790491-5566-45da-9a83-925603655cb8)
-
-- 주문내역
-![orderinfo](https://github.com/marshmellow2178/mall/assets/115971843/3076a5d3-bc17-4807-81aa-6159f729a149)
 
 ### 고객센터
 - 문의하기
