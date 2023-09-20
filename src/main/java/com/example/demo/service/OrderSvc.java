@@ -115,6 +115,18 @@ public class OrderSvc {
 			}
 		}
 		
+		if(oi.getUpoint()>0) {
+			Point use = Point.builder()
+					.id(mi.getId())
+					.point(oi.getUpoint())
+					.desc(Code_List.USE)
+					.su("u")
+					.date(LocalDateTime.now())
+					.build();
+			pointRepo.save(use);
+			mi.givePoint(-oi.getUpoint());
+		}
+		
 		Point save = Point.builder()
 				.id(mi.getId())
 				.point(oi.getPay()/Code_List.SAVE_RATE)
@@ -123,18 +135,7 @@ public class OrderSvc {
 				.date(LocalDateTime.now())
 				.build();
 		pointRepo.save(save);
-		mi.setPoint(mi.getPoint() + save.getPoint());
-		memberRepo.save(mi);
-		
-		Point use = Point.builder()
-				.id(mi.getId())
-				.point(oi.getUpoint())
-				.desc(Code_List.USE)
-				.su("u")
-				.date(LocalDateTime.now())
-				.build();
-		pointRepo.save(use);
-		mi.setPoint(mi.getPoint() - use.getPoint());
+		mi.givePoint(save.getPoint());
 		memberRepo.save(mi);
 		
 		return oiidx;

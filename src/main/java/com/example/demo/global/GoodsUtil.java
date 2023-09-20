@@ -7,6 +7,9 @@ import java.time.LocalTime;
 public class GoodsUtil {
 
 	public static String getDateFormat(LocalDateTime ldt) {
+		if(ldt==null) {
+			return "";
+		}
 		return ldt.getMonthValue()+"월 "+ldt.getDayOfMonth()+"일";
 	}
 	
@@ -30,5 +33,30 @@ public class GoodsUtil {
 		int min = second/60;
 		second = second%60;
 		return min+" : "+second;
+	}
+	
+	public static int point_calculate(int point, int days) {	//포인트, 연속출석날짜 -> 최종 포인트
+		if(days>=3) { point += 100; }
+		if(days>=7) { point += 300; }
+		if(days>=15) { point += 500; }
+		if(days==LocalDateTime.now().toLocalDate().lengthOfMonth()) { point *= 2; }
+		return point;
+	}
+	
+	public static String attendance_level(int num, int lastday) {
+		if(num<=0) { return "";}
+		String str = "level";
+		if(num<3) {
+			str += "1";
+		}else if(num<7) {
+			str += "2";
+		}else if(num<15) {
+			str += "3";
+		}else if(num<lastday){
+			str += "4";
+		}else {
+			str += "5";
+		}
+		return str;
 	}
 }

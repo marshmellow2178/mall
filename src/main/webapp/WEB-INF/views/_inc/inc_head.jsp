@@ -17,16 +17,17 @@ if (loginInfo != null)	isLogin = true;
     <title>Home</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js" ></script>
+    <script src = "js/common.js"></script>
 </head>
 <header>
 	<figure class = "logo"><a href = "index">
 	<img src="img/logo.png"></a></figure>
     
 	<nav>
-		<a href="product_list"><b>PRODUCT</b></a>
-		<a href="event_list"><b>EVENT</b></a>
-		<a href="notice_list"><b>고객센터</b></a>
-	    <a href = "my_page"><b>마이페이지</b></a>
+		<a href="product_list" id = product><b>PRODUCT</b></a>
+		<a href="event_list" id = event><b>EVENT</b></a>
+		<a href="notice_list" id = customer><b>고객센터</b></a>
+	    <a href = "my_page" id = mypage><b>마이페이지</b></a>
 	    <%if(loginInfo==null) { %>
 	    	<a href = "login_form">로그인</a>
 	    <%}else{ %>
@@ -35,3 +36,4 @@ if (loginInfo != null)	isLogin = true;
 	</nav>
 </header>
 <body>
+

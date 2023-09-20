@@ -42,6 +42,7 @@ header{
 	justify-content: center;
 	align-items: center;
 	padding-top: 10px;
+	height: 15vh;
 }
 header .logo{
 	width: 100px;
@@ -50,29 +51,14 @@ header .logo{
 header nav{
 	font-size: 20px;
 	width: 80%;
-	margin: 20px auto;
 	display: flex;
-	justify-content: space-between;
 }
-header nav h3{
-	width: 100%;
-	font-size: 20px;
-	text-align: center;
-	padding: 10px;
-	margin-bottom: 10px;
-	border-bottom: 1px solid gray;
-}
-header nav div{
+header nav a{
 	width: 20%;
-	padding: 10px;
+	padding: 30px 20px;
 }
-header nav div a, header nav div p{
-	width: 100%;
-	padding: 10px;
-	text-align: center;
-}
-.active{
-	border: 1px solid navy;
+header nav a.active{
+	border-bottom: 5px solid navy;
 }
 footer{
 	width: 100%;
@@ -94,8 +80,8 @@ footer figure{
 =========================================
 */
 main { 
-	width: 80%;
-	min-height: calc(100vh - 120px);
+	width: 70%;
+	min-height: calc(100vh - 300px);
     margin: 0 auto;
     padding-bottom: 50px;
 }
@@ -126,7 +112,6 @@ input[type=button], input[type=submit], input[type=reset]{
 }
 input[type=number]{
 	text-align: right;
-	width: 80px;
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -135,6 +120,24 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 input[type=checkbox]{
 	margin: 5px;
+}
+input:valid{
+  border: 1px solid #0080ff;
+}
+input:disabled {
+  background-color: lightgray;
+  color: black;
+}
+.count{
+	width: 50px;
+}
+textarea{
+	width: 80%;
+	height: 30vh;
+	padding: 20px;
+	margin: 20px 0;
+	white-space: pre-line;
+	display: block;
 }
 .paging{ /*페이징 영역*/
     text-align: center;
@@ -200,13 +203,9 @@ article h2{ /*제목*/
 	padding: 30px 0;
 	border-bottom: 1px solid navy;
 }
-article figure{ /*사진*/
-	margin: 30px 0;
-}
-article textarea{ /*내용*/
-	width: 80%;
-	height: 50vh;
-	padding: 20px;
+article .content{
+	padding: 10px;
+	min-height: 40vh;
 }
 .schtype{/*검색폼*/
 	display: flex;
@@ -232,8 +231,38 @@ ul li{
 	position: relative;
 	min-width: 250px;
 }
-ul h3{
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+.calendar{
+	justify-content: center;
+	width: 60%;
+}
+.calendar li{
+	width: 14%;
+	height: 100px;
+	padding: 0;
+	min-width: 10px;
+	border: 1px solid gray;
+}
+.calendar div{
+	padding: 5px;
+	height: 100%;
+}
+.calendar .level1{
+	color: darkorange;
+	background: lightyellow;
+}
+.calendar .level2{
+	color: red;
+	background: pink;
+}
+.calendar .level3{
+	color: blue;
+	background: lightblue;
+}
+.calendar .level4{
+	color: green;
+	background: lightgreen;
+}
+.calendar .level5{
+	color: brown;
+	background: gold;
 }

@@ -100,7 +100,7 @@ public class OrderCtrl {
 		List<OrderDetail> dl = orderSvc.getOrderDetail(oiidx);
 		model.addAttribute("oi", oi);
 		model.addAttribute("dl", dl);
-		return "order/order_detail";
+		return "mypage/order_detail";
 	}
 
 	@RequestMapping(value = "/order_list")
@@ -122,7 +122,7 @@ public class OrderCtrl {
 		List<OrderInfo> orderlist = orderSvc.getOrderList(mi.getId(), pageable, pageInfo);
 		model.addAttribute("orderlist", orderlist);
 		model.addAttribute("pageInfo", pageInfo);
-		return "order/order_list";
+		return "mypage/order_list";
 	}
 	
 	@RequestMapping(value = "/super_order_list")

@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class EventDto {
 	private int idx;
-	private String title, img1, img2, status;
+	private String title, img1, img2, status, type;
 	private LocalDateTime date, sdate, edate;
 	
 	//entity to dto
@@ -20,6 +20,7 @@ public class EventDto {
 		this.date = ei.getDate();
 		this.sdate = ei.getSdate();
 		this.edate = ei.getEdate();
+		this.type = ei.getType();
 	}
 
 }

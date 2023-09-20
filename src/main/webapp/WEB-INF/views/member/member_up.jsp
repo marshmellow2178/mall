@@ -6,8 +6,6 @@
 %>
 <link rel = "stylesheet" href = "css/common.css">
 
-<script>
-</script>
 <main>
 	<%@include file = "../_inc/inc_mypage.jsp" %>
 	<div class = "content">
@@ -16,12 +14,15 @@
 	    	<caption>회원정보 수정</caption>
 	    	<tr>
 	    		<th>ID</th>
-	    		<td><input type = "text" name = "id" maxlength = "20" value = "<%=loginInfo.getId() %>"></td>
+	    		<td>
+	    		<input type="text" name="id" pattern = "[A-Za-z0-9].{4,20}" required onkeyup = 'chkId(this.value);' value = "<%=loginInfo.getId() %>">
+				<span id="idMsg"> </span>
+				</td>
 	    	</tr>
 	    	<tr>
 	    		<th>이메일</th>
 	    		<td>
-		    		<input type = "text" name = "email" maxlength = "20" value = "<%=loginInfo.getEmail() %>"> @ 
+		    		<input type = "text" name = "email" pattern = "[A-Za-z0-9]+" required value = "<%=loginInfo.getEmail() %>"> @ 
 					<select name = "domain">
 						<%for(int i = 0;i<domainList.size();i++){
 							Domain d= domainList.get(i);
@@ -34,16 +35,39 @@
 	    	<tr>
 		    	<th>연락처</th>
 		    	<td>
-		    		<input type = "text" value = "010" disabled>
-					<input type = "number" name = "phone" maxlength = 8 placeholder = "<%=loginInfo.getPhone()%>">
+					<input type = "number" name = "phone" pattern = "[0-9].{8,}" maxlength = 8 value = "<%=loginInfo.getPhone()%>">
 		    	</td>
 	    	</tr>
 	    	<tr>
 	    	<th rowspan = 2>주소</th>
-	    	<td><input type = "text" name = "addr1" maxlength = 50 value = "<%=loginInfo.getAddr1() %>"></td></tr>
-	    	<tr><td><input type = "text" name = "addr2" maxlength = 50 value = "<%=loginInfo.getAddr2() %>"></td></tr>
+	    	<td><input type = "text" name = "addr1" maxlength = 20 required value = "<%=loginInfo.getAddr1() %>"></td></tr>
+	    	<tr><td><input type = "text" name = "addr2" maxlength = 20 required value = "<%=loginInfo.getAddr2() %>"></td></tr>
+	    	
+	    	<tr>
+	    		<th>약관</th>
+	    		<td>
+				<p>개인정보 제3자 제공동의</p>
+				<textarea disabled>
+				개인정보제공동의 개인정보제공동의 / 개인정보제공동의 개인정보제공동의 
+				개인정보제공동의 개인정보제공동의 / 개인정보제공동의 개인정보제공동의
+				개인정보제공동의 개인정보제공동의 / 개인정보제공동의 개인정보제공동의
+				개인정보제공동의 개인정보제공동의 / 개인정보제공동의 개인정보제공동의
+				</textarea>
+				<input type="checkbox" name="agree" value="y" id="privacy"
+				<%if(loginInfo.getAgree().equals("y")){ %>
+				checked = checked
+				<%} %>>
+				<label for="privacy">동의합니다</label>
+				<input type="checkbox" name="agree" value="n" id="privacy"
+				<%if(loginInfo.getAgree()!=null && loginInfo.getAgree().equals("n")){ %>
+				checked = checked
+				<%} %>>
+				<label for="privacy">동의하지 않습니다</label>
+				</td>
+			</tr>
 	    </table>
-		<input type = "submit" value = "정보수정" class = "ctgr">
+		<input type = "submit" value = "정보수정">
 	</form>
 	</div>
 </main>
+<%@include file = "../_inc/inc_foot.jsp" %>

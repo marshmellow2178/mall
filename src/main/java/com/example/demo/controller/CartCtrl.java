@@ -62,6 +62,6 @@ public class CartCtrl {
 		
 		List<OrderCartDto> cartList = cartSvc.cartView(mi.getId());
 		model.addAttribute("cartList", cartList);
-		return "order/cart_view";
+		return "mypage/cart_view";
 	}
 }

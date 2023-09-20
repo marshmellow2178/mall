@@ -44,22 +44,12 @@ tr td:nth-of-type(2){
 	Inquiry dto = null;
     for (int i=0;i<iList.size();i++){   
     	dto = iList.get(i); 
-    	String ctgr = "";
-    	if(dto.getCtgr().equals("a")){
-    		ctgr = "환불/취소";
-    	}
-    	else if(dto.getCtgr().equals("b")){
-    		ctgr = "반품/배송";
-    	}
-    	else{
-    		ctgr = "기타";
-    	}
     	String isend = "";
     	if(dto.getIsend()==null || !dto.getIsend().equals("y")){ isend = "대기중"; }
     	else{ isend = "처리완료"; }
 	%>
 		<tr>
-			<td><%="["+ctgr+"]"%></td>
+			<td><%="["+Code_List.getQuestionCtgr(dto.getCtgr())+"]"%></td>
             <td><a href = "inquiry_view?idx=<%=dto.getIdx()%>"><%=dto.getTitle()%></a></td>
             <td><%=GoodsUtil.boardDateFormat(dto.getDate())%></td>
             <td><%=isend%></td>

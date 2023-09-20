@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.EventDto;
 import com.example.demo.dto.PageInfo;
+import com.example.demo.entity.Attendance;
 import com.example.demo.entity.EventInfo;
+import com.example.demo.repository.AttendanceRepo;
 import com.example.demo.repository.EventRepo;
 import com.example.demo.vo.EventVo;
 
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class EventSvc {
 	private final EventRepo eventRepo;
+	private final AttendanceRepo attendanceRepo;
 	
 	public List<EventInfo> eventList(String title, Pageable pageable, PageInfo pageInfo) {
 		Page<EventInfo> eventPage = eventRepo.findByTitleContaining(title, pageable);
@@ -34,6 +37,17 @@ public class EventSvc {
 	
 	public EventInfo getEvent(int idx) {
 		return eventRepo.findByIdx(idx);
+	}
+	
+	public List<Attendance> getAttendanceList(int idx){
+		//년, 월 -> 년, 월, 1 ~ 년, 월, 월의 마지막 일
+		LocalDateTime today = LocalDateTime.now();
+		int year = today.getYear();
+		int month = today.getMonthValue();
+		int lastday = today.toLocalDate().lengthOfMonth();
+		LocalDateTime sdate = LocalDateTime.of(year, month, 1, 0, 0, 0);
+		LocalDateTime edate = LocalDateTime.of(year, month, lastday, 23, 59, 59);
+		return attendanceRepo.findByUseridxAndLoginBetween(idx, sdate, edate);
 	}
 	
 	public List<EventInfo> getAdminEventList(String title, Pageable pageable, PageInfo pageInfo){

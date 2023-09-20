@@ -61,7 +61,7 @@ function buy(value){
 	<form name = "buyForm">
 		<table>
 		<tr>
-		<th>상품명</th>
+		<th width = 25%>상품명</th>
 		<td><p><%=pi.getName()%></p>
 		<input type = "hidden" name = "piid" value = "<%=pi.getIdx()%>"></td>
 		</tr>
@@ -109,9 +109,10 @@ function buy(value){
 main{
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-between;
 }
 .product{
-	width: 50%;
+	width: 40%;
 }
 aside{
 	width: 40%;
@@ -120,8 +121,7 @@ aside{
 	top: 0px;
 }
 form{
-	margin: 50px auto;
-	padding: 30px 50px;
+	margin: 40px auto;
 }
 figcaption{
 	font-weight: bold;
@@ -134,5 +134,8 @@ figcaption{
 }
 #total{
 	color: darkred;
+}
+input[type=number]{
+	width: 50px;
 }
 </style>

@@ -45,6 +45,16 @@ public class CustomerCtrl {
 		return "customer/notice_list";
 	}
 	
+	@RequestMapping(value = "/notice_view")
+	public String noticeView(
+			@RequestParam(value = "idx")int idx,
+			Model model
+			) {
+		Notice n = customerSvc.getNotice(idx);
+		model.addAttribute("notice", n);
+		return "customer/notice_view";
+	}
+	
 	@RequestMapping(value = "/super_notice_list")
 	public String adminNoticeList(
 			@RequestParam(value = "ctgr", required = false) String ctgr,
@@ -99,9 +109,10 @@ public class CustomerCtrl {
 			@RequestParam(value = "idx") Integer idx,
 			@RequestParam(value = "ctgr") String ctgr,
 			@RequestParam(value = "title") String title,
-			@RequestParam(value = "content") String content
+			@RequestParam(value = "content") String content,
+			@RequestParam(value = "admin") int admin
 			) {
-		customerSvc.noticeUpdate(idx, ctgr, title, content);
+		customerSvc.noticeUpdate(idx, ctgr, title, content, admin);
 		return "redirect:/super_notice_list";
 	}
 	
@@ -135,16 +146,6 @@ public class CustomerCtrl {
 		model.addAttribute("faqList", faqList);
 		model.addAttribute("pageInfo", pageInfo);
 		return "admin/super_faq_list";
-	}
-	
-	@RequestMapping(value = "/faq_view")
-	public String faqView(
-			@RequestParam(value = "idx")int idx,
-			Model model
-			) {
-		Faq faq = customerSvc.getFaq(idx);
-		model.addAttribute("faq", faq);
-		return "mypage/faq_view";
 	}
 	
 	@RequestMapping(value = "/super_faq_register")
@@ -233,7 +234,8 @@ public class CustomerCtrl {
 		PageInfo pageInfo = new PageInfo();
 		if(ctgr==null) { ctgr = ""; }
 		if(key==null) { key = ""; }
-		List<Inquiry> iList = customerSvc.getInquiryList(ctgr, key, pageable, pageInfo);
+		String miid = mi.getId();
+		List<Inquiry> iList = customerSvc.getUserInquiryList(miid, ctgr, key, pageable, pageInfo);
 		model.addAttribute("iList", iList);
 		model.addAttribute("pageInfo", pageInfo);
 		

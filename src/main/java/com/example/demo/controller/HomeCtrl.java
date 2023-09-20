@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeCtrl {
 	
-	private final HomeSvc homeSvc;
+	private final HomeSvc homeSvc; 
 	
 	@RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public String home(

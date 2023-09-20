@@ -20,8 +20,13 @@ String kind = request.getParameter("kind");
 		chkPoint(all);
 	}
 	function chkPoint(value){
+		let pay = parseInt($('#init').val());
+		$("#total").html(pay);
 		if(value > <%=loginInfo.getPoint()%>){
 			$('#pointalert').html("보유포인트가 부족합니다");
+			$('input[name=upoint]').val(0);
+		}else if(value > pay/2){
+			$('#pointalert').html("상품가격의 절반을 초과할 수 없습니다");
 			$('input[name=upoint]').val(0);
 		}else{
 			$('#pointalert').html("");
@@ -29,7 +34,7 @@ String kind = request.getParameter("kind");
 			let point = $('input[name=upoint]').val();
 			$('#pay').val(pay-point);
 			$("#total").html(pay-point);
-			$('#spoint').val($('#pay').val()/100);
+			$('#spoint').val(Math.floor($('#pay').val()/100));
 		}
 	}
 </script>
@@ -124,12 +129,12 @@ String kind = request.getParameter("kind");
 		
 		<tr>
 	    	<td>상품 가격</td>
-	    	<td colspan = 6><%=total %></td>
+	    	<td colspan = 6 id = price><%=total %></td>
 	    </tr>
 	    
 	    <tr>
 	    	<td>배송비</td>
-			<td colspan = 6><%=deliver %></td>      
+			<td colspan = 6 id = deliver><%=deliver %></td>      
 	     </tr>
 	     
 	     <tr>
@@ -138,6 +143,7 @@ String kind = request.getParameter("kind");
 	     </tr>
 		
 	</table>				
+		<input type = "hidden" value = "<%=total+deliver %>" id = init>
 		<input type="hidden" value="<%=request.getParameter("kind") %>" name="kind">
 		<input type="hidden" value="<%=total+deliver %>" name="pay" id = "pay">
 		<input type = "hidden" name = "spoint" id = "spoint" value = "<%=(total+deliver)/100 %>">

@@ -18,19 +18,39 @@ if(key == null) { key = ""; }
 String tmp = "&ctgr="+ctgr+"&key="+key;
 %>
 <link rel = "stylesheet" href = "css/common.css">
+<script>
+$(window).on("load", function(){
+	$('.list tr:even').click(function(){
+		$(this).next().addClass('active');
+	});
+	$('.list tr:odd').click(function(){
+		$(this).removeClass('active');
+	});
+});
+</script>
+<style>
+.list tr:nth-child(odd){
+	border: none;
+}
+.list tr:nth-child(even){
+	display:none;
+}
+.list tr:nth-child(even).active{
+	display: revert;
+    background-color: #ffdddd;
+}
+</style>
 <main>
 <%@include file="../_inc/inc_customer.jsp"%>
 
 <div class = "schtype">
     <p>검색 결과: <%=rcnt %>개</p>
     <form class = "search">
-        <select name = "ctgr">
-            <option value = "" <%if(ctgr!=null && ctgr.equals("")){%> selected = "selected" <%} %>>전체</option>
-            <option value = "m" <%if(ctgr!=null && ctgr.equals("m")){%> selected = "selected" <%} %>>회원</option>
-            <option value = "e" <%if(ctgr!=null && ctgr.equals("e")){%> selected = "selected" <%} %>>쿠폰/혜택/이벤트</option>
-            <option value = "o" <%if(ctgr!=null && ctgr.equals("o")){%> selected = "selected" <%} %>>주문/결제</option>
-            <option value = "s" <%if(ctgr!=null && ctgr.equals("s")){%> selected = "selected" <%} %>>배송</option>
-            <option value = "c" <%if(ctgr!=null && ctgr.equals("c")){%> selected = "selected" <%} %>>취소/반품/교환</option>
+        <select name = "ctgr" onchange = form.submit();>
+            <option value = "" <%if(ctgr.equals("")){%> selected = "selected" <%} %>><%=Code_List.getQuestionCtgr("") %></option>
+			<option value = "m" <%if(ctgr.equals("m")){%> selected = "selected" <%} %>><%=Code_List.getQuestionCtgr("m") %></option>
+			<option value = "p" <%if(ctgr.equals("p")){%> selected = "selected" <%} %>><%=Code_List.getQuestionCtgr("p") %></option>
+			<option value = "o" <%if(ctgr.equals("o")){%> selected = "selected" <%} %>><%=Code_List.getQuestionCtgr("o") %></option>
         </select>
         <input type = "search" value = "<%=key%>">
         <input type = "submit" value = "검색">
@@ -42,8 +62,8 @@ String tmp = "&ctgr="+ctgr+"&key="+key;
 		Faq fd = faqList.get(i);
 	%>
     <tr>
-    	<th>Q</th>
-    	<td><a href = "faq_view?idx=<%=fd.getIdx()%>"><%="["+fd.getCtgr()+"] "+fd.getTitle() %></a></td>
+    	<th width = 5%>Q</th>
+    	<td><%="["+Code_List.getQuestionCtgr(fd.getCtgr())+"] "+fd.getTitle() %></td>
     </tr>
     <tr>
     	<th>A</th>

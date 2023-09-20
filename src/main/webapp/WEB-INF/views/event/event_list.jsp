@@ -9,8 +9,6 @@ int bsize = pageInfo.getBsize(), cpage = pageInfo.getCpage();
 int psize = pageInfo.getPsize(), pcnt = pageInfo.getPcnt();
 int spage = pageInfo.getSpage();
 long rcnt = pageInfo.getRcnt();	
-
-String status = "진행중";
 %>
 <link rel = "stylesheet" href = "css/common.css">
 <style>
@@ -24,15 +22,11 @@ String status = "진행중";
 	for(int i = 0; i < eventList.size(); i++){
 		EventInfo el = eventList.get(i);
 		String lnk = "event_view?beidx=" + el.getIdx();
-		if(el.getStatus().equals("a")) status = "진행중";
-		else if(el.getStatus().equals("b")) status = "대기중";
-		else if(el.getStatus().equals("c")) status = "마감임박";	
-		else if(el.getStatus().equals("d")) status = "종료";
 	%>
 		<li onclick = "location.href = ('<%=lnk%>');">
 			<figure><img src="img/event_img/<%=el.getImg1() %>"></figure>
             <h3><%=el.getTitle()%></h3> 
-            <p><%=status%></p>
+            <p><%=Code_List.getEventStatus(el.getStatus())%></p>
             <p>시작 <%=GoodsUtil.getDateFormat(el.getSdate()) %></p>
             <p>종료 <%=GoodsUtil.getDateFormat(el.getEdate()) %></p>
         </li>

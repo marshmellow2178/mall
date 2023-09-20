@@ -34,11 +34,19 @@ public class EventInfo {
 	
 	@Column(name = "be_status")
 	private String status;
+	
+	@Column(name = "admin")
+	private int admin;
+	
+	@Column(name = "content")
+	private String content;
+	
+	@Column(name = "type")
+	private String type;
 
 	@Builder
 	public EventInfo(int idx, String title, String img1, String img2, LocalDateTime date,
-			LocalDateTime sdate, LocalDateTime edate, String status) {
-		super();
+			LocalDateTime sdate, LocalDateTime edate, String status, int admin, String content, String type) {
 		this.idx = idx;
 		this.title = title;
 		this.img1 = img1;
@@ -47,6 +55,9 @@ public class EventInfo {
 		this.sdate = sdate;
 		this.edate = edate;
 		this.status = status;
+		this.admin = admin;
+		this.content = content;
+		this.type = type;
 	}
 
 }

@@ -141,6 +141,6 @@ public class MypageCtrl {
 			ra.addAttribute("url", url);
 			return "redirect:/login_form";
 		}
-		return "member/member_out";
+		return "mypage/member_out";
 	}
 }

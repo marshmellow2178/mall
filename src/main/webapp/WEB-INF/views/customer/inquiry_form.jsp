@@ -3,30 +3,24 @@
 <%@include file="../_inc/inc_head.jsp"%>
 <link rel = "stylesheet" href = "css/common.css">
 <style>
-#title{
+input[type=text]{
 	width: 73%;
-}
-#content{
-	width: 80%;
-	height: 60vh;
 }
 </style>
 <main>
 <%@include file="../_inc/inc_customer.jsp"%>
     
     <form class="submit" action = "inquiry_proc_in" method="post">
-        <div class = title>
+        <div>
         	<select name = "ctgr">
-        		<option value = "">분류 선택</option>
-        		<option value = "a">환불/취소</option>
-        		<option value = "b">배송/반품</option>
-        		<option value = "c">기타</option>
+        		<option value = "m">회원</option>
+        		<option value = "p">상품</option>
+        		<option value = "o">주문</option>
         	</select>
-            <input type="text" name="title" id = "title" placeholder="제목" required>
+            <input type="text" name="title" placeholder="제목" required>
         </div>
         <textarea name = "content" id = "content" required></textarea>
         <div>
-			<input type = "button" onclick = "location.href ='inquiry_list';" value = "목록으로">
             <input type="reset" value="초기화">
             <input type="submit" value="제출">
         </div>

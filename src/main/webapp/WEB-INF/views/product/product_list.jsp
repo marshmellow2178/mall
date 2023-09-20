@@ -25,26 +25,20 @@ if(key==null){ key = ""; }
 else{ key = key.trim().toLowerCase(); }
 
 String tmp = "&type="+type+"&sort="+sort+"&artist="+artist+"&key="+key; 
+String all = (type==null || type.equals(""))?"active":"";
 %>
 
 <link rel = "stylesheet" href = "css/common.css">
 <main>
 
-	<div class = "type">
-	<%if(type.equals("")){ %>
-	<a href = "product_list" class = "ctgr active">전체</a>
-	<%}else{ %>
-	<a href = "product_list" class = "ctgr">전체</a>
+	<div>
+	<a href = "product_list?type=" class = "ctgr <%=all%>">전체</a>
+	<%for(int i = 0;i<typeList.size();i++){ 
+		Type t = typeList.get(i);
+		String active = (type.equals(t.getName()))?"active":"";
+	%>
+		<a href = "product_list?type=<%=t.getName()%>" class = "ctgr <%= active%>"><%=t.getName() %></a>
 	<%} %>
-		<%for(int i = 0;i<typeList.size();i++){ 
-			Type t = typeList.get(i);
-			String active = "";
-			if(type.equals(t.getName())){
-				active = " active";
-			}
-		%>
-			<a href = "product_list?type=<%=t.getName()%>" class = "ctgr<%=active%>"><%=t.getName() %></a>
-		<%} %>
 	</div>
 	
 	<div class = "schtype">
@@ -56,14 +50,14 @@ String tmp = "&type="+type+"&sort="+sort+"&artist="+artist+"&key="+key;
 		<input type = "hidden" name = "type" value = "<%=type %>">
 		<%} %>
 		
-		<select name = "sort">
+		<select name = "sort" onchange = form.submit();>
 			<option value = "date,DESC" <%if(sort!=null && sort.equals("date,DESC")){%> selected = "selected" <%} %>>최신순</option>
 			<option value = "sale" <%if(sort!=null && sort.equals("sale")){%> selected = "selected" <%} %>>인기순</option>
 			<option value = "price" <%if(sort!=null && sort.equals("price")){%> selected = "selected" <%} %>>낮은가격순</option>
 			<option value = "price,DESC" <%if(sort!=null && sort.equals("price,DESC")){%> selected = "selected" <%} %>>높은가격순</option>
 		</select>
 		
-		<select name = "artist">
+		<select name = "artist" onchange = form.submit();>
 			<option value = "">아티스트</option>
 			<%for(int i = 0;i<artistList.size();i++) {
 			Artist a = artistList.get(i);%>
@@ -97,7 +91,9 @@ String tmp = "&type="+type+"&sort="+sort+"&artist="+artist+"&key="+key;
 		<h3><%=pi.getName() %></h3>
 		<p><%=pi.getArtist() %></p>
 		<p><%=pi.getRealprice() %>원
+		<%if(pi.getDc()>0){ %>
 		<span class = "dc"><%=pi.getDc() %>%</span></p>
+		<%} %>
 	</li>
 
 <% }%>

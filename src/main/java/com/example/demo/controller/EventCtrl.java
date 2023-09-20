@@ -16,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.dto.AdminDto;
 import com.example.demo.dto.EventDto;
+import com.example.demo.dto.MemberInfoDto;
 import com.example.demo.dto.PageInfo;
+import com.example.demo.entity.Attendance;
 import com.example.demo.entity.EventInfo;
 import com.example.demo.global.Code_List;
 import com.example.demo.service.EventSvc;
@@ -29,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class EventCtrl {
 	
 	private final EventSvc eventSvc;
+	
 	@RequestMapping(value = "/event_list")
 	public String eventList(
 		@RequestParam(value = "key", required = false)String key,
@@ -51,6 +54,17 @@ public class EventCtrl {
 		EventDto ei = eventSvc.eventView(beidx);
 		model.addAttribute("el", ei);
 		return "event/event_view";
+	}
+	
+	@RequestMapping(value = "/event_attendance")
+	public String eventAttendance(Model model, HttpServletRequest request) {
+		MemberInfoDto mi = (MemberInfoDto)request.getSession().getAttribute("loginInfo");
+		if(mi==null) {
+			return "redirect:/login_form";
+		}
+		List<Attendance> aList = eventSvc.getAttendanceList(mi.getIdx());
+		model.addAttribute("aList", aList);
+		return "event/event_attendance";
 	}
 	
 	@RequestMapping(value = "/super_event_list")

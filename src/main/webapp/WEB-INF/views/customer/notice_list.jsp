@@ -4,7 +4,7 @@
 <%
 request.setCharacterEncoding("utf-8");
 PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");
-List<NoticeDto> noticeList = (List<NoticeDto>)request.getAttribute("noticeList");
+List<Notice> noticeList = (List<Notice>)request.getAttribute("noticeList");
 
 int bsize = pageInfo.getBsize(), cpage = pageInfo.getCpage();
 int psize = pageInfo.getPsize(), pcnt = pageInfo.getPcnt();
@@ -24,32 +24,35 @@ String tmp = "&ctgr="+ctgr+"&key="+key;
 <div class = "schtype">
     <p>검색 결과: <%=rcnt %>개</p>
     <form class = "search">
-        <select name = "ctgr">
-            <option value = "n" <%if(ctgr!=null && ctgr.equals("n")){%> selected = "selected" <%} %>>전체</option>
-            <option value = "a" <%if(ctgr!=null && ctgr.equals("a")){%> selected = "selected" <%} %>>환불</option>
-            <option value = "b" <%if(ctgr!=null && ctgr.equals("b")){%> selected = "selected" <%} %>>배송</option>
-            <option value = "c" <%if(ctgr!=null && ctgr.equals("c")){%> selected = "selected" <%} %>>취소/반품</option>
+        <select name = "ctgr" onchange = form.submit();>
+        	<option value = "" <%if(ctgr.equals("")){%> selected = "selected" <%} %>><%=Code_List.getNoticeCtgr("") %></option>
+            <option value = "n" <%if(ctgr.equals("n")){%> selected = "selected" <%} %>><%=Code_List.getNoticeCtgr("n") %></option>
+            <option value = "a" <%if(ctgr.equals("a")){%> selected = "selected" <%} %>><%=Code_List.getNoticeCtgr("a") %></option>
         </select>
         <input type = "search" name = "key" value = "<%=key%>">
         <input type = "submit" value = "검색">
     </form>
 </div>
 
-<%if(noticeList.size()>0){ %>
 <table class = "list">
     <tr>
-        <th>분류</th>
+        <th width = 15%>분류</th>
         <th>제목</th>
-        <th>등록일</th>
+        <th  width = 15%>작성자</th>
+        <th  width = 15%>등록일</th>
     </tr>
-	<%for(int i = 0;i<noticeList.size();i++){ 
-		NoticeDto nd = noticeList.get(i);
-	%>
-    <tr>
-    	<td><%="["+nd.getCtgr()+"]"%></td>
-        <td><%=nd.getTitle() %></td>
-        <td><%=GoodsUtil.boardDateFormat(nd.getDate()) %></td>
-    </tr>
+    <%if(noticeList.size()>0){ 
+		for(int i = 0;i<noticeList.size();i++){ 
+		Notice nd = noticeList.get(i);%>
+	    <tr>
+	    	<td><%="["+Code_List.getNoticeCtgr(nd.getCtgr())+"]"%></td>
+	        <td><a href = "notice_view?idx=<%=nd.getIdx()%>"><%=nd.getTitle() %></a></td>
+	        <td><%=nd.getAdminid() %>
+	        <td><%=GoodsUtil.boardDateFormat(nd.getDate()) %></td>
+	    </tr>
+		<%} 
+	}else{%>
+		<tr><td  colspan = 4>검색 결과가 없습니다</td></tr>
 	<%} %>
 </table>
 
@@ -77,8 +80,6 @@ String tmp = "&ctgr="+ctgr+"&key="+key;
 	}else{ out.println("<p>마지막</p>");}
 	%>
 </div>
-<%}else{ %>
-	<p>검색결과가 없습니다</p>
-<%}%>
+
 </main>
 <%@include file="../_inc/inc_foot.jsp"%>

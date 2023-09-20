@@ -13,7 +13,7 @@ public class MemberInfoDto {
 	private LocalDateTime lastlogin;
 	private int point, idx;
 	private String phone, email, domain, addr1, addr2;
-	private String status;
+	private String status, agree;
 	private LocalDateTime joindate;
 	
 	//entity to dto 
@@ -30,5 +30,6 @@ public class MemberInfoDto {
 		this.addr2 = mi.getAddr2();
 		this.joindate = mi.getJoindate();
 		this.status = mi.getStatus();
+		this.agree = mi.getAgree();
 	}
 }

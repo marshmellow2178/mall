@@ -46,11 +46,16 @@ public class CustomerSvc {
 		noticeRepo.save(n);
 	}
 	
-	public void noticeUpdate(int idx, String ctgr, String title, String content) {
+	public void noticeUpdate(int idx, String ctgr, String title, String content, int admin) {
 		Notice n = noticeRepo.findByIdx(idx);
-		n.setCtgr(ctgr);
-		n.setTitle(title);
-		n.setContent(content);
+		n = Notice.builder()
+				.ctgr(ctgr)
+				.title(title)
+				.content(content)
+				.admin(admin)
+				.date(LocalDateTime.now())
+				.idx(n.getIdx())
+				.build();
 		noticeRepo.save(n);
 	}
 	
@@ -89,8 +94,15 @@ public class CustomerSvc {
 				.title(title.trim())
 				.content(content.trim())
 				.date(LocalDateTime.now())
+				.isend("n")
 				.build();
 		inquiryRepo.save(iq);
+	}
+	
+	public List<Inquiry> getUserInquiryList(String miid, String ctgr, String title, Pageable pageable, PageInfo pageInfo) {
+		Page<Inquiry> inquiryPage = inquiryRepo.findByMiidAndCtgrContainsAndTitleContains(miid, ctgr, title, pageable);
+		pageInfo.setPage(inquiryPage);
+		return inquiryPage.getContent();
 	}
 	
 	public List<Inquiry> getInquiryList(String ctgr, String title, Pageable pageable, PageInfo pageInfo) {

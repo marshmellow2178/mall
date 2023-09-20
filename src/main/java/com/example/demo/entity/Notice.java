@@ -38,26 +38,21 @@ public class Notice {
 	
 	@Column(name = "bn_date")
 	private LocalDateTime date;
-
-	public void setCtgr(String ctgr) {
-		this.ctgr = ctgr;
-	}
 	
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
+	@Column(name = "admin")
+	private int admin;
+	
+	@Column(name = "admin_id")
+	private String adminid;
+	
 	@Builder
-	public Notice(int idx, String ctgr, String title, String content, LocalDateTime date) {
-		super();
+	public Notice(int idx, String ctgr, String title, String content, LocalDateTime date, int admin, String adminid) {
 		this.idx = idx;
 		this.ctgr = ctgr;
 		this.title = title;
 		this.content = content;
 		this.date = date;
+		this.admin = admin;
+		this.adminid = adminid;
 	}
 }

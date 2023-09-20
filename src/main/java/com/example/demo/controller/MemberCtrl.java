@@ -21,8 +21,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.dto.AdminDto;
 import com.example.demo.dto.MemberInfoDto;
 import com.example.demo.dto.PageInfo;
+import com.example.demo.entity.Domain;
 import com.example.demo.entity.MemberInfo;
 import com.example.demo.service.MemberSvc;
+import com.example.demo.vo.MemberInsertVo;
 import com.example.demo.vo.MemberUpdateVo;
 
 @Controller
@@ -32,11 +34,13 @@ public class MemberCtrl {
 	private MemberSvc memberSvc;
 	
 	@RequestMapping(value = "/member_form_in", method = RequestMethod.GET)
-	public String memberFormIn(HttpServletRequest request){
+	public String memberFormIn(HttpServletRequest request, Model model){
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginInfo")!=null) {
 			return "login_form";
 		}
+		List<Domain> domainList = memberSvc.getDomain();
+		model.addAttribute("domainList", domainList);
 		return "member/member_in";
 	}
 	
@@ -45,24 +49,18 @@ public class MemberCtrl {
 	public boolean chkID(@RequestBody String id) {
 		return memberSvc.chkID(id);
 	}
-	
-	@RequestMapping(value = "/chkEmail", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean chkEmail(@RequestBody String email) {
-		return memberSvc.chkEmail(email);
-	}
 
 	@RequestMapping(value = "/member_proc_in", method = RequestMethod.POST)
-	public String memberProcIn(MemberInfoDto mid) {
-		memberSvc.insert(mid);
-		return "redirect:isLogin";
+	public String memberProcIn(MemberInsertVo miv) {
+		System.out.println(miv.getId());
+		memberSvc.insert(miv);
+		return "redirect:/login_form";
 	}
 	
 	@RequestMapping(value = "/member_proc_up", method = RequestMethod.POST)
 	public String memberProcUp(
 		MemberUpdateVo muv,
-		HttpServletRequest request,
-		Model model
+		HttpServletRequest request
 		) {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("loginInfo")==null) {

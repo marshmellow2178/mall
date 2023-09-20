@@ -17,6 +17,7 @@ import com.example.demo.dto.PageInfo;
 import com.example.demo.repository.DomainRepo;
 import com.example.demo.repository.MemberRepo;
 import com.example.demo.repository.PointRepo;
+import com.example.demo.vo.MemberInsertVo;
 import com.example.demo.vo.MemberUpdateVo;
 
 import lombok.RequiredArgsConstructor;
@@ -34,30 +35,27 @@ public class MemberSvc {
 		return false;
 	}
 	
-	public boolean chkEmail(String Email) {
-		if(memberRepo.countByEmail(Email)!=0) { return true; }
-		return false;
-	}
-	
 	@Transactional
-	public void insert(MemberInfoDto mid) {
+	public void insert(MemberInsertVo miv) {
 		MemberInfo mi = MemberInfo.builder()
-				.id(mid.getId())
-				.pw(mid.getPw())
-				.name(mid.getName())
+				.id(miv.getId())
+				.pw(miv.getPw())
+				.name(miv.getName())
 				.point(Code_List.REGISTER_POINT)
-				.phone(mid.getPhone())
-				.email(mid.getEmail())
-				.domain(mid.getDomain())
-				.status(Code_List.NORMAL_USER) 
+				.phone(miv.getPhone())
+				.email(miv.getEmail())
+				.domain(miv.getDomain())
+				.addr1(miv.getAddr1())
+				.addr2(miv.getAddr2())
+				.status("n") 
 				.joindate(LocalDateTime.now())
 				.build();
 		memberRepo.save(mi);
 		
 		Point p = Point.builder()
-				.id(mid.getId())
+				.id(miv.getId())
 				.point(Code_List.REGISTER_POINT)
-				.su(Code_List.SAVE)
+				.su("s")
 				.desc(Code_List.JOIN)
 				.date(LocalDateTime.now())
 				.build();
@@ -73,6 +71,7 @@ public class MemberSvc {
 		mi.setDomain(mid.getDomain());
 		mi.setAddr1(mid.getAddr1());
 		mi.setAddr2(mid.getAddr2());
+		mi.setAgree(mid.getAgree());
 		memberRepo.save(mi);
 		return new MemberInfoDto(mi);
 	}

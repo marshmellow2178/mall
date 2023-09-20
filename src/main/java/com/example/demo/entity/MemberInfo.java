@@ -62,14 +62,18 @@ public class MemberInfo {
 	@Column(name = "mi_lastlogin")
 	private LocalDateTime lastlogin;
 	
+	@Setter
+	@Column(name = "agree")
+	private String agree;
+	
 	public void givePoint(int point) {
 		this.point += point;
-		System.out.println(this.point);
 	}
 	
 	@Builder
 	public MemberInfo(int idx, String id, String pw, String name, String phone, String email, String domain,
-			String addr1, String addr2, String status, int point, LocalDateTime joindate, LocalDateTime lastlogin) {
+			String addr1, String addr2, String status, int point, LocalDateTime joindate, LocalDateTime lastlogin,
+			String agree) {
 		super();
 		this.idx = idx;
 		this.id = id;
@@ -84,5 +88,6 @@ public class MemberInfo {
 		this.point = point;
 		this.joindate = joindate;
 		this.lastlogin = lastlogin;
+		this.agree = agree;
 	}
 }

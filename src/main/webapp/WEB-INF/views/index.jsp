@@ -23,10 +23,9 @@ List<ProductInfo> saleList = (List<ProductInfo>)request.getAttribute("saleList")
 			    	<img src = "img/event_img/<%=ed.getImg1() %>">
 			    	</figure>
 			    	<article class = "eventlink">
-			    		<h3><a href = "event_view?beidx=<%=ed.getIdx() %>"><%=ed.getTitle() %></a></h3>
-			    		<p>
-			    		<%=GoodsUtil.getDateFormat(ed.getSdate()) %> ~ 
-			    		<%=GoodsUtil.getDateFormat(ed.getEdate()) %></p>
+			    		<h2><%=ed.getSdate().getMonthValue()+"월 "+ed.getTitle() %></h2>
+			    		<a href = "event_view?beidx=<%=ed.getIdx() %>" class = "ctgr">안내</a>
+			    		<a href = "event_attendance" class = "ctgr">바로가기</a>
 			    	</article>
 			    </div>
 		    <%} %>
