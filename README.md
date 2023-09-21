@@ -1,11 +1,9 @@
 # Basic mall project
 
 ## 팀 프로젝트
-
-## 개요
 > 아이돌 관련상품을 판매하는 모의 쇼핑몰로, 여러 굿즈 판매사이트를 참고하여 작성
 
-## 개발 환경
+### 개발 환경
 - jsp, java 1.8, MySQL
 - 개발 기간: 1개월
 - 개발 인원: 5명
@@ -18,11 +16,10 @@
   - 관리자 상품 및 게시물 등록/수정
 
 ### 설계도
-![바로가기](https://drive.google.com/file/d/1-J3yrv75pvlxHSukakzbzGdLAJgwNnhL/view?usp=drive_link)
-
+[바로가기](https://drive.google.com/file/d/1-J3yrv75pvlxHSukakzbzGdLAJgwNnhL/view?usp=drive_link)
 
 ## 개인 프로젝트
-위 팀 프로젝트를 개인적으로 재작업한 것이므로, <br>
+> 위 팀 프로젝트를 개인적으로 재작업한 것이므로, <br>
 프로젝트의 기본적인 기획과 UI설계는 팀 프로젝트와 동일합니다
 
 ### 사용자
@@ -45,86 +42,180 @@ http://init2178.cafe24.com/demo/super
 ### 0331_UPDATE: SPRING BOOT
 1. 요구 사항
 - 코드 작성의 편의 및 최신 프레임워크의 학습을 위해 스프링 부트로 재작성
-2. ![설계서}(https://drive.google.com/file/d/1Fyqv0SovRHhIs6CNP9aJh4b9ah05JlU9/view?usp=drive_link)
-3. 소스 코드
+2. 설계
+  
+![springboot-1](https://github.com/marshmellow2178/mall/assets/115971843/1a361ad8-0d54-49c9-a5ba-686fc7339fac)
+![springboot-2](https://github.com/marshmellow2178/mall/assets/115971843/1cdebe93-8914-4af4-89ef-fc8d49cbc368)
+
+3. 소스코드: 상품 관련 코드의 일부분
+
+- 상품 객체
+```java
+package com.example.demo.entity;
+
+import java.time.LocalDateTime;
+import javax.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
+import lombok.*;
+
+@Entity
+@Getter  //get 메소드 자동 생성
+@DynamicUpdate  //변경된 부분만 업데이트
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  //접근제어
+@Table(name = "t_product_info")
+public class ProductInfo {
+	@Id
+	@Column(name = "pi_idx")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)  //PK, 수정/신규 구분
+	private int idx;
+	
+	@Column(name = "pi_name")
+	private String name;
+	
+	@Column(name = "pi_price")
+	private int price;
+	
+	@Column(name = "pi_date")
+	private LocalDateTime date;
+
+	@Builder    //생성자 패턴
+	public ProductInfo(int idx, String name, int price, LocalDateTime date) {
+		this.idx = idx;
+		this.name = name;
+		this.price = price;
+		this.date = date;
+	}
+}
+```
+
+- 상품 목록 가져오기
+```java
+@Controller
+@RequiredArgsConstructor  //아래 서비스 객체 생성
+public class ProductCtrl {
+	
+	private final ProductSvc productSvc;  //싱글톤(한 개의 인스턴스만 계속해서 사용하기)
+  @RequestMapping(value = "/product_list", method = RequestMethod.GET)
+  	public String productList(
+  			@RequestParam(value = "key", required = false)String key,
+  			Model model, 
+  			@PageableDefault(size=20, sort="date", direction = Sort.Direction.DESC)Pageable pageable) {
+  		
+  		PageInfo pageInfo = new PageInfo();
+  		if(key==null){ key = ""; } 
+  		List<ProductInfo> productList = productSvc.productList(key, pageable, pageInfo);
+  		model.addAttribute("productList", productList);
+  		model.addAttribute("pageInfo", pageInfo);
+  		return "product/product_list";
+  	}
+}
+
+@RequiredArgsConstructor
+@Service
+public class ProductSvc {
+	private final ProductRepo productRepo;
+  public List<ProductInfo> productList(String key, Pageable pageable, PageInfo pageInfo ) {
+  		Page<ProductInfo> productPage = productRepo.findByNameContains(key, pageable);  //조회
+  		pageInfo.setPage(productPage);    //자체 페이징 메소드
+  		List<ProductInfo> productList = productPage.getContent();
+  		return productList;
+  	}
+}
+
+public interface ProductRepo extends JpaRepository<ProductInfo, Long>{
+	Page<ProductInfo> findByNameContains(String name, Pageable pageable);  //상품의 이름으로 검색해오는 커스텀메소드
+}
+```
+
+- 상품 등록하기
+```java
+package com.example.demo.vo;
+import lombok.Getter;
+import java.util.LocalDateTime;
+
+@Getter
+public class ProductInfoVo {
+	private String name;
+	private int price;
+  private LocalDateTime date;
+	
+	public ProductInfoVo(String name, int price, LocalDateTime date) {
+		this.name = name;
+		this.price = price;
+    this.date = date;
+	}
+}
+
+@Controller
+@RequestMapping(value = "/super_product_proc")
+public String adminProductProc(
+    HttpServletRequest request, 
+    ProductInfoVo piv,  //폼 입력 받는 객체
+    RedirectAttributes ra  //리다이렉트(컨트롤러 -> 컨트롤러 호출)
+    ) {
+  ra.addAttribute("piid", piid);
+  return "redirect:/super_product_view";
+}
+
+@Service
+public int productRegister(ProductInfoVo piv) {
+  ProductInfo pi = ProductInfo.builder()  //빌더 패턴 사용하기
+      .name(piv.getName())
+      .price(piv.getPrice())
+      .date(LocalDateTime.now())
+      .build();
+  int idx = productRepo.save(pi).getIdx();  //신규 등록시 idx자동지정
+  return idx;  //idx가 지정되었다면 (0이 아니라면: DB기본 키는 1부터 auto increment) 정상 작동된 것
+}
+```
+
+- 장바구니 등록 AJAX
+```java
+$.ajax({
+  type : "POST",  //get: 쿼리 스트링(전달 가능한 정보에 제약), post: 암호화(보안이 요구되는 정보)
+  url : "cart_proc_in",  //작동시킬 컨트롤러
+  data : {    //전달할 데이
+    "piid" : "<%=pi.getIdx()%>", 
+    "cnt" : cnt	
+  },
+  success : function(){  //작업 성공
+    if(confirm("장바구니에 담았습니다.\n장바구니로 이동하시겠습니까?")){
+      location.href = "cart_view";
+    }
+  }
+});
+
+@RequestMapping(value = "/cart_proc_in", method = RequestMethod.POST)
+@ResponseBody
+public void CartProcIn(
+    HttpServletRequest request,  //세션에 든 로그인 정보
+    @RequestParam(value = "piid") Integer piid,  //ajax입력 받기(기본형은 객체형으로 변환)
+    @RequestParam(value = "cnt") Integer cnt  
+    ){
+  HttpSession session = request.getSession();
+  MemberInfoDto mi = (MemberInfoDto) session.getAttribute("loginInfo");  //회원 로그인정보 확인
+  cartSvc.cartInsert(mi.getId(), piid, cnt);  //장바구니 객체에 저장
+}
+```
 
 ### 0726_UPDATE: UI
 1. 요구 사항
 - 서버 용량 문제 해결을 위한 이미지 삭제
 - 간소한 디자인을 위한 CSS와 자바스크립트 통합
-2. ![설계서](https://drive.google.com/file/d/1I79g4WbxSPPoTd3-25Z91N6-gQzJNr8m/view?usp=drive_link)
-3. 소스코드
+2. 설계
 
-<<<<<<< HEAD
+![ui설계-1](https://github.com/marshmellow2178/mall/assets/115971843/7a648e7a-c889-4e71-a8c0-b95d8059ba09)
+![ui설계-2](https://github.com/marshmellow2178/mall/assets/115971843/b06e8bd5-d565-49dc-afc2-405645918fec)
+![ui설계-3](https://github.com/marshmellow2178/mall/assets/115971843/31691ad0-7c7a-4f5b-a5ff-50a161adae8e)
+
 ### 0920_UPDATE: 출석체크
 1. 요구 사항
 - 사용자가 하루 첫 로그인 시, 랜덤한 양의 포인트를 지급한다
 - 연속 출석 일수에 따라 보상을 증가한다
 - 출석과 연속 출석을 달력에 표시한다
-2. 설계서
+2. 설계 및 결과
 
-3. 소스코드
-=======
-- 이벤트 모음 
-![main1](https://github.com/marshmellow2178/mall/assets/115971843/b60ea70c-3155-4cd7-a411-8cac56019362)
+![attend1](https://github.com/marshmellow2178/mall/assets/115971843/3846bcc4-fe82-4381-be29-951d693feafe)
+![attend2](https://github.com/marshmellow2178/mall/assets/115971843/d804f608-fd61-4348-9537-7eb1c8c1e15a)
 
-- 추천상품 모음
-![main2](https://github.com/marshmellow2178/mall/assets/115971843/9d5ddca1-baa6-40b7-808c-253184fe0356)
 
-### 상품
-![상품](https://github.com/marshmellow2178/mall/assets/115971843/d9772e10-27d1-4766-b118-d0ced220fe75)
-
-### 마이페이지
-- 공통메뉴
-![mypage_menu](https://github.com/marshmellow2178/mall/assets/115971843/e45147cb-359b-4626-8a17-48edd8b03eaf)
-
-- 회원
-![회원](https://github.com/marshmellow2178/mall/assets/115971843/9ccd340f-3fc9-4f69-8488-cb7de50a2d0e)
-
-### 고객센터
-- 문의하기
-![문의하기](https://github.com/marshmellow2178/mall/assets/115971843/71a8fcf2-5d37-4c20-81b1-dd9e4523a417)
-
-- 목록
-![고객센터](https://github.com/marshmellow2178/mall/assets/115971843/ee2b61b9-bd87-400d-9aae-2b399406e21e)
-
-## 관리자 페이지
-- 메뉴
-![admin](https://github.com/marshmellow2178/mall/assets/115971843/9d0c5e7b-8a60-461a-8f49-ca5405fe3c0c)
-
-- 각 메뉴의 목록/등록/수정 기능
-
-## 변경점
-### 프레임워크/프로그램
-Spring -> Spring Boot
-Java 1.8 -> Java 11
-Tomcat8 -> Tomcat10
-
-### 데이터베이스
-- 상품 옵션 테이블 삭제: 본래 옵션을 아티스트 멤버로 계획했으나, 대부분의 상품이 멤버 구분이 없어 삭제
-- 이메일 도메인 테이블 추가
-- 회원테이블 변경: 아이디 변경 가능
-
-### UI
-- 디자인 간소화 및 통일
-- 메인페이지 아티스트 목록 삭제: 상품목록으로 대체(아이돌 굿즈는 꾸준히 판매되는 것이 아니므로
-아티스트의 판매순위가 전달할 정보가 없다고 판단)
-- 아티스트 페이지 삭제: 상품 검색 기능과 중복
-- 이미지 대체: 상품 이미지 용량이 매우 커져 공통 이미지로 대체
-
-### 기능
-- 관리자 기능 추가: 상품/주문/회원 및 게시판 관리
-
-## 업데이트
-### 03-31
-  - 스프링 부트 적용
-  - 데이터베이스 및 디자인에서 사소한 변경
-  - 호스팅 완료
-### 07-26
-  - 관리자 페이지 완성
-  - 기본 데이터 입력 완료
-  - 기존의 많은 이미지들을 대체해 용량 줄이기
-### 09-20
-- 사용자 페이지 오류 수정
-- 출석체크 기능 추가
->>>>>>> 32b79f37de329951033127dd1eba4e9c3b5e4fe8
