@@ -15,8 +15,7 @@
   - 이벤트/고객센터 게시판
   - 관리자 상품 및 게시물 등록/수정
 
-### 설계도
-[바로가기](https://drive.google.com/file/d/1-J3yrv75pvlxHSukakzbzGdLAJgwNnhL/view?usp=drive_link)
+### [설계도](https://drive.google.com/file/d/1-J3yrv75pvlxHSukakzbzGdLAJgwNnhL/view?usp=drive_link)
 
 ## 개인 프로젝트
 > 위 팀 프로젝트를 개인적으로 재작업한 것이므로, <br>
